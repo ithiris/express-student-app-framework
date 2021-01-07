@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/student.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Student Management System</title>
+</head>
+<body>
+<header>
+    <div class="container">
+        <img src="https://randomuser.me/api/portraits/man/30.jpg" alt="">
+        <nav>
+            <ul>
+                <li><a href=/>Home</a></li>
+                <li><a href=student.html>Student</a></li>
+                <li><a href=contact.html>Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="container ">
+    <form id="form" class="needs-validation" novalidate>
+        <div class=" form-group row">
+            <label  for="studentName" class="col-sm-2 col-form-label">Student Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control"id="studentName" placeholder="studentName" required>
+                <div class="invalid-feedback">
+                    Please provide a valid studentName.
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <label  for="dob" class="col-sm-2 col-form-label">Date of  Birth</label>
+            <div class="col-sm-10">
+                <input type="text" class ="form-control" id="dob" placeholder="dob" required >
+                <div class="invalid-feedback">
+                    Please provide a valid DOB.
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  for="age" class="col-sm-2 col-form-label">Age</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="age" placeholder="age" required/>
+                <div class="invalid-feedback">
+                    Please provide a valid age.
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  for="gender" class="col-sm-2 col-form-label">Gender</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="gender" placeholder="gender" required/>
+                <div class="invalid-feedback">
+                    Please provide a valid gender.
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  for="class" class="col-sm-2 col-form-label">Class</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="class" placeholder="class" min="1" max="10" required/>
+                <div class="invalid-feedback">
+                    Please provide a valid class.
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  for="section" class="col-sm-2 col-form-label">Section</label>
+            <div class="col-sm-10">
+                <input type="text" class ="form-control" id="section" placeholder="section" required/>
+                <div class="invalid-feedback">
+                    Please provide a valid section.
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="saveindex">
+        <div class="form-group row justify-content-center">
+            <div class="col-sm-3 mx-auto text-center">
+                <button type="submit" id="addStudentBtn" class="btn btn-success">Add Student</button>
+                <button type="submit" id="saveuserBtn" class="btn btn-success" style="display: none;">Save user</button>
+
+            </div>
+        </div>
+
+    </form>
+    <table class="table table-striped mt-3 mb-0 ">
+        <thead class="headings">
+        <tr>
+            <th>ID</th>
+            <th>Student Name</th>
+            <th>DOB</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Class</th>
+            <th>Section</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="studentList"></tbody>
+    </table>
+</div>
+
+</body>
+</html>
