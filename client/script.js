@@ -10,6 +10,7 @@ let updateStudentBtn = document.querySelector("#updateStudentBtn");
 let saveIndex = document.querySelector("#saveIndex");
 let studentList = document.querySelector("#studentList");
 let studentsArray = [];
+let apiURl ="http://localhost:9000/";
 
 addBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -31,9 +32,15 @@ addBtn.addEventListener("click", function (event) {
     }
     displayStudentList(studentsArray);
 });
+
 function displayStudentList(studentData) {
+}
+async function fetchStudentData() {
+    const url =apiURl + "user"
+    const response = await fetch(url)
+    const studentsArray = await response.json();
     let studentHtml = "";
-    studentData.forEach(function (element, index) {
+    studentsArray.forEach(function (element, index) {
         studentHtml += `<tr>
 <td>${index + 1}</td>
 <td>${element.studentId}</td>
@@ -49,6 +56,7 @@ function displayStudentList(studentData) {
     });
     studentList.innerHTML = studentHtml;
 }
+console.log(fetchStudentData());
 function clearStudentData() {
     studentId.value = "";
     studentName.value = "";
