@@ -10,7 +10,7 @@ let updateStudentBtn = document.querySelector("#updateStudentBtn");
 let saveIndex = document.querySelector("#saveIndex");
 let studentList = document.querySelector("#studentList");
 let studentsArray = [];
-let apiURl ="http://localhost:9000/";
+let apiURl ="http://localhost:4000/";
 
 addBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -27,14 +27,12 @@ addBtn.addEventListener("click", function (event) {
             klass: klass.value,
             section: section.value,
         };
-        studentsArray.push(studentObj);
         clearStudentData();
+        postData(apiURl,studentObj)
+            .then(fetchStudentData);
     }
-    displayStudentList(studentsArray);
 });
-
-function displayStudentList(studentData) {
-}
+fetchStudentData();
 async function fetchStudentData() {
     const url =apiURl + "user"
     const response = await fetch(url)
@@ -56,44 +54,61 @@ async function fetchStudentData() {
     });
     studentList.innerHTML = studentHtml;
 }
-console.log(fetchStudentData());
+
+async function postData(apiURl,data){
+const url =apiURl +"student";
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data)
+        // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+
+}
 function clearStudentData() {
-    studentId.value = "";
-    studentName.value = "";
-    dob.value = "";
-    age.value = "";
-    gender.value = "";
-    klass.value = "";
-    section.value = "";
-}
-function editStudentDetails(index) {
-    saveIndex.value = index;
-    studentId.value = studentsArray[index].studentId
-    studentName.value = studentsArray[index].studentName;
-    dob.value = studentsArray[index].dob;
-    age.value = studentsArray[index].age;
-    gender.value = studentsArray[index].gender;
-    klass.value = studentsArray[index].klass;
-    section.value = studentsArray[index].section;
-    addBtn.style.display = "none";
-    updateStudentBtn.style.display = "block";
-}
-updateStudentBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    let editIndex = saveIndex.value;
-    studentsArray[editIndex].studentId = studentId.value;
-    studentsArray[editIndex].studentName = studentName.value;
-    studentsArray[editIndex].dob = dob.value;
-    studentsArray[editIndex].age = age.value;
-    studentsArray[editIndex].gender = gender.value;
-    studentsArray[editIndex].klass = klass.value;
-    studentsArray[editIndex].section = section.value;
-    addBtn.style.display = "block";
-    updateStudentBtn.style.display = "none";
-    displayStudentList(studentsArray);
-    clearStudentData();
-});
-function deleteStudentDetails(index) {
-    studentsArray.splice(index, 1);
-    displayStudentList(studentsArray);
-}
+        studentId.value = "";
+        studentName.value = "";
+        dob.value = "";
+        age.value = "";
+        gender.value = "";
+        klass.value = "";
+        section.value = "";
+    }
+
+    function editStudentDetails(index) {
+        saveIndex.value = index;
+        studentId.value = studentsArray[index].studentId
+        studentName.value = studentsArray[index].studentName;
+        dob.value = studentsArray[index].dob;
+        age.value = studentsArray[index].age;
+        gender.value = studentsArray[index].gender;
+        klass.value = studentsArray[index].klass;
+        section.value = studentsArray[index].section;
+        addBtn.style.display = "none";
+        updateStudentBtn.style.display = "block";
+    }
+
+    updateStudentBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        let editIndex = saveIndex.value;
+        studentsArray[editIndex].studentId = studentId.value;
+        studentsArray[editIndex].studentName = studentName.value;
+        studentsArray[editIndex].dob = dob.value;
+        studentsArray[editIndex].age = age.value;
+        studentsArray[editIndex].gender = gender.value;
+        studentsArray[editIndex].klass = klass.value;
+        studentsArray[editIndex].section = section.value;
+        addBtn.style.display = "block";
+        updateStudentBtn.style.display = "none";
+        displayStudentList(studentsArray);
+        clearStudentData();
+    });
+
+    function deleteStudentDetails(index) {
+        studentsArray.splice(index, 1);
+        displayStudentList(studentsArray);
+    }
