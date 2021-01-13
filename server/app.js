@@ -1,13 +1,10 @@
 const express =require('express');
 const app =express();
 const bodyParser = require('body-parser');
-
+const studentList =require('./model/sudentModel');
 const dotenv =require('dotenv');
 dotenv.config();
-let studentList=[
-    {studentId: "1", studentName: "shafi", dob: "11-5-2010", age: "10", gender: "Male"},
-    {studentId: "2", studentName: "Ayisha", dob: "26-10-2013", age: "7", gender: "Female"}
-]
+console.log(studentList)
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
@@ -22,7 +19,6 @@ app.get('/user',(req,res,next)=>{
 
 });
 app.post('/student',(req,res,next)=>{
-    console.log(req.body);
     studentObj =req.body;
     studentList.push(studentObj);
     res.json(studentList);

@@ -10,7 +10,7 @@ let updateStudentBtn = document.querySelector("#updateStudentBtn");
 let saveIndex = document.querySelector("#saveIndex");
 let studentList = document.querySelector("#studentList");
 let studentsArray = [];
-let apiURl ="http://localhost:4000/";
+let apiURl ="http://localhost:8300/";
 
 addBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -37,6 +37,7 @@ async function fetchStudentData() {
     const url =apiURl + "user"
     const response = await fetch(url)
     const studentsArray = await response.json();
+    console.log(studentsArray)
     let studentHtml = "";
     studentsArray.forEach(function (element, index) {
         studentHtml += `<tr>
