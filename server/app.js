@@ -23,10 +23,11 @@ app.post('/student',(req,res,next)=>{
     res.json("success");
 });
 app.patch("/update", (req, res) => {
-    var obj =studentList.find(function (obj){
+    var returnObj =studentList.find(function (obj){
         return obj.studentId ==req.body.studentId
     });
-    var index =studentList.indexOf(obj)
+    var index =studentList.indexOf(returnObj)
+    console.log(index)
     studentList.splice(index,1,req.body);
     res.json("updated")
 });

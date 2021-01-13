@@ -10,7 +10,7 @@ let updateStudentBtn = document.querySelector("#updateStudentBtn");
 let saveIndex = document.querySelector("#saveIndex");
 let studentList = document.querySelector("#studentList");
 let studentsArray = [];
-let apiURl ="http://localhost:9600/";
+let apiURl = "http://localhost:9600/";
 
 addBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -28,17 +28,17 @@ addBtn.addEventListener("click", function (event) {
             section: section.value,
         };
         clearStudentData();
-        postData(apiURl,studentObj)
+        postData(apiURl, studentObj)
             .then(fetchStudentData);
     }
 });
 fetchStudentData();
+
 async function fetchStudentData() {
-    const url =apiURl + "user"
+    const url = apiURl + "user"
     const response = await fetch(url)
     const responseArray = await response.json();
-    studentsArray =responseArray;
-    console.log(studentsArray)
+    studentsArray = responseArray;
     let studentHtml = "";
     studentsArray.forEach(function (element, index) {
         studentHtml += `<tr>
@@ -57,91 +57,87 @@ async function fetchStudentData() {
     studentList.innerHTML = studentHtml;
 }
 
-async function postData(apiURl,data){
-const url =apiURl +"student";
+async function postData(apiURl, data) {
+    const url = apiURl + "student";
     const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        method: 'POST', // POST
         headers: {
             'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
-        // body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
 
 }
+
 function clearStudentData() {
-        studentId.value = "";
-        studentName.value = "";
-        dob.value = "";
-        age.value = "";
-        gender.value = "";
-        klass.value = "";
-        section.value = "";
-    }
+    studentId.value = "";
+    studentName.value = "";
+    dob.value = "";
+    age.value = "";
+    gender.value = "";
+    klass.value = "";
+    section.value = "";
+}
 
-    function editStudentDetails(index) {
-        saveIndex.value = index;
-        studentId.value = studentsArray[index].studentId
-        studentName.value = studentsArray[index].studentName;
-        dob.value = studentsArray[index].dob;
-        age.value = studentsArray[index].age;
-        gender.value = studentsArray[index].gender;
-        klass.value = studentsArray[index].klass;
-        section.value = studentsArray[index].section;
-        addBtn.style.display = "none";
-        updateStudentBtn.style.display = "block";
-    }
+function editStudentDetails(index) {
+    saveIndex.value = index;
+    studentId.value = studentsArray[index].studentId
+    studentName.value = studentsArray[index].studentName;
+    dob.value = studentsArray[index].dob;
+    age.value = studentsArray[index].age;
+    gender.value = studentsArray[index].gender;
+    klass.value = studentsArray[index].klass;
+    section.value = studentsArray[index].section;
+    addBtn.style.display = "none";
+    updateStudentBtn.style.display = "block";
+}
 
-    updateStudentBtn.addEventListener("click", function (event) {
-        event.preventDefault();
-        let editIndex = saveIndex.value;
-        studentsArray[editIndex].studentId = studentId.value;
-        studentsArray[editIndex].studentName = studentName.value;
-        studentsArray[editIndex].dob = dob.value;
-        studentsArray[editIndex].age = age.value;
-        studentsArray[editIndex].gender = gender.value;
-        studentsArray[editIndex].klass = klass.value;
-        studentsArray[editIndex].section = section.value;
-        addBtn.style.display = "block";
-        updateStudentBtn.style.display = "none";
-        putData(apiURl,studentsArray[editIndex])
-            .then(fetchStudentData);
-        clearStudentData();
-    });
+updateStudentBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    let editIndex = saveIndex.value;
+    studentsArray[editIndex].studentId = studentId.value;
+    studentsArray[editIndex].studentName = studentName.value;
+    studentsArray[editIndex].dob = dob.value;
+    studentsArray[editIndex].age = age.value;
+    studentsArray[editIndex].gender = gender.value;
+    studentsArray[editIndex].klass = klass.value;
+    studentsArray[editIndex].section = section.value;
+    addBtn.style.display = "block";
+    updateStudentBtn.style.display = "none";
+    putData(apiURl, studentsArray[editIndex])
+        .then(fetchStudentData);
+    clearStudentData();
+});
 
-async function putData(apiURl,data){
-    const url =apiURl +"update";
+async function putData(apiURl, data) {
+    const url = apiURl + "update";
     const response = await fetch(url, {
-        method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+        method: 'PATCH', // PATCH
         headers: {
             'Content-Type': 'application/json'
-// 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
-// body data type must match "Content-Type" header
     });
     return response.json(); // parses JSON response into native JavaScript objects
 
 }
-async function deleteData(apiURl,data){
-    const url =apiURl +"delete";
+
+async function deleteData(apiURl, data) {
+    const url = apiURl + "delete";
     const response = await fetch(url, {
-        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+        method: 'DELETE', // DELETE, etc.
         headers: {
             'Content-Type': 'application/json'
-// 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data)
-// body data type must match "Content-Type" header
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
 
 }
 
 
 function deleteStudentDetails(index) {
-    deleteData(apiURl,studentsArray[index])
+    deleteData(apiURl, studentsArray[index])
         .then(fetchStudentData);
 }
