@@ -29,6 +29,16 @@ app.patch("/update", (req, res) => {
     var index =studentList.indexOf(obj)
     studentList.splice(index,1,req.body);
     res.json("updated")
+});
+
+app.delete("/delete",(req,res)=>{
+    var obj =studentList.find(function (obj){
+        return obj.studentId ==req.body.studentId
+    });
+    var index =studentList.indexOf(obj)
+    studentList.splice(index,1);
+    res.json("deleted")
+
 })
 
 app.listen(process.env.PORT,()=>{

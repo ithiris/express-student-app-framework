@@ -125,7 +125,23 @@ async function putData(apiURl,data){
     return response.json(); // parses JSON response into native JavaScript objects
 
 }
+async function deleteData(apiURl,data){
+    const url =apiURl +"delete";
+    const response = await fetch(url, {
+        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json'
+// 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data)
+// body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
 
-    function deleteStudentDetails(index) {
-        studentsArray.splice(index, 1);
-    }
+}
+
+
+function deleteStudentDetails(index) {
+    deleteData(apiURl,studentsArray[index])
+        .then(fetchStudentData);
+}
