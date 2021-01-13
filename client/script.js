@@ -10,7 +10,7 @@ let updateStudentBtn = document.querySelector("#updateStudentBtn");
 let saveIndex = document.querySelector("#saveIndex");
 let studentList = document.querySelector("#studentList");
 let studentsArray = [];
-let apiURl ="http://localhost:8300/";
+let apiURl ="http://localhost:9600/";
 
 addBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -36,7 +36,8 @@ fetchStudentData();
 async function fetchStudentData() {
     const url =apiURl + "user"
     const response = await fetch(url)
-    const studentsArray = await response.json();
+    const responseArray = await response.json();
+    studentsArray =responseArray;
     console.log(studentsArray)
     let studentHtml = "";
     studentsArray.forEach(function (element, index) {
@@ -105,11 +106,26 @@ function clearStudentData() {
         studentsArray[editIndex].section = section.value;
         addBtn.style.display = "block";
         updateStudentBtn.style.display = "none";
-        displayStudentList(studentsArray);
+        putData(apiURl,studentsArray[editIndex])
+            .then(fetchStudentData);
         clearStudentData();
     });
 
+async function putData(apiURl,data){
+    const url =apiURl +"update";
+    const response = await fetch(url, {
+        method: 'PATCH', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json'
+// 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(data)
+// body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+
+}
+
     function deleteStudentDetails(index) {
         studentsArray.splice(index, 1);
-        displayStudentList(studentsArray);
     }
